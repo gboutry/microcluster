@@ -208,6 +208,7 @@ func (db *DB) dialFunc() dqliteClient.DialFunc {
 	return func(ctx context.Context, address string) (net.Conn, error) {
 		conn, err := dqliteNetworkDial(ctx, address, db)
 		if err != nil {
+			logger.Error("Failed to dial dqlite network", logger.Ctx{"address": address, "error": err})
 			return nil, fmt.Errorf("Failed to dial https socket: %w", err)
 		}
 
